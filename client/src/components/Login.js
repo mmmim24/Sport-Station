@@ -1,10 +1,10 @@
-import React from 'react'
+import React from 'react';
 
 export const Login = () => {
   return (
     <React.Fragment>
-        <div>
-            <div>
+        <div className='d-flex justify-content-center align-content-center bg-secondary vh-100'>
+            <div className='bg-white p-3 rounded w-25'>
                 <form action=''>
                     <div className='mb-3'>
                         <label htmlFor='email'>Email</label>
