@@ -1,3 +1,6 @@
+*{
+  font-family: Raleway;
+}
 .App {
   text-align: center;
 }
@@ -11,6 +14,27 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+}
+.lnk{
+  text-decoration: none;
+  color: black;
+}
+
+.lnk:hover{
+  text-decoration: none;
+  color: wheat;
+}
+
+.error{
+  text-align: center;
+  height: 100px;
+}
+.text-div{
+  padding: 50px;
+}
+.jrsy{
+  height: 275px;
+  width: auto;
 }
 
 .App-header {
