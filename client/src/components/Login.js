@@ -1,9 +1,12 @@
 import React from 'react';
-import { Link} from 'react-router-dom';
-import Validation  from '../LoginValidation';
+import { Link,useNavigate} from 'react-router-dom';
+import axios from 'axios';
+
+// import Validation  from '../LoginValidation';
 
 export const Login = () => {
-    const [err,setErr] = React.useState({});
+    // const [err,setErr] = React.useState({});
+    const navigate = useNavigate();
     const [value,setValue] = React.useState({
         email: '',
         password: ''
@@ -11,11 +14,23 @@ export const Login = () => {
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-        setErr(Validation(value));
+        // setErr(Validation(value));
+        setValue(value);
+        if(value.email&&value.password){
+            axios.post('http://localhost:3305/login',value)
+                .then(res=>{
+                    if(res.data==="SUCCESS"){
+                        navigate('/');
+                    }else{
+                        alert('Invalid username and password');
+                    }
+                })
+                .catch(err=>console.log(err));
+        } 
     }
 
     const handleInput = (e) =>{
-        e.preventDefault();
+        // e.preventDefault();
         setValue(prev=>({...prev,[e.target.name]:[e.target.value]}))
     }
 
@@ -27,13 +42,23 @@ export const Login = () => {
                 <form action='' onSubmit={handleSubmit}>
                     <div>
                         <label className='m-2 d-block fw-bolder' htmlFor='email'>Email</label>
-                        <input className='m-2 d-block form-control rounded-4 border-3' name='email' type='email' placeholder='Enter Email' onChange={handleInput}/>
-                        {err.email&&<span className='text-danger'>{err.email}</span>}
+                        <input className='m-2 d-block form-control rounded-4 border-3' 
+                                name='email' 
+                                type='email' 
+                                placeholder='Enter Email' 
+                                onChange={handleInput} 
+                                required/>
+                        {/* {err.email&&<span className='text-danger'>{err.email}</span>} */}
                     </div>
                     <div className='mb-3'>
                         <label className='m-2 d-block fw-bolder' htmlFor='password'>Password</label>
-                        <input className='m-2 d-block form-control rounded-4 border-3' name='password' type='password' placeholder='Enter Password' onChange={handleInput}/>
-                        {err.password&&<span className='text-danger'>{err.password}</span>}
+                        <input className='m-2 d-block form-control rounded-4 border-3' 
+                                name='password' 
+                                type='password' 
+                                placeholder='Enter Password' 
+                                onChange={handleInput}
+                                required/>
+                        {/* {err.password&&<span className='text-danger'>{err.password}</span>} */}
                     </div>
                     <button to='/' className='m-2 d-block fw-bolder form-control btn btn-success rounded-4 border-0'>Login</button>
                     <div className='m-2 d-block fw-bolder'>Don't have an account?</div>

@@ -1,6 +1,6 @@
 const express = require('express');
-const cors = require('cors');
 const mysql = require('mysql');
+const cors = require('cors');
 
 const app = express();
 app.use(cors());
@@ -22,10 +22,8 @@ app.get('/signup',(req,res)=>{
 })
 
 app.post('/signup',(req,res)=>{
-    const q = 'INSERT INTO users (`uid`,`uname`,`uemail`,`ucontact`,`upwd`) VALUES(?)';
-    // const values = ['5','Mac','xaq@gmail.com','01992377665','XAQlaq43'];
+    const q = 'INSERT INTO users (`uname`,`uemail`,`ucontact`,`upwd`) VALUES(?)';
     const values = [
-        req.body.uid,
         req.body.uname,
         req.body.uemail,
         req.body.ucontact,
@@ -37,9 +35,20 @@ app.post('/signup',(req,res)=>{
     });
 })
 
+app.post('/login',(req,res)=>{
+    const q = 'SELECT * FROM users WHERE `uemail`=? AND `upwd`=?';
+    db.query(q,[req.body.uemail,req.body.upwd],(err,data)=>{
+        if(err) return res.json("an error occured");
+        if(data.length>0){
+            return res.json("SUCCESS");
+        }
+        else{
+            return res.json("FAILED");
+        }
+    });
+}) 
+
 
 app.listen(3305,()=>{
     console.log('listening...');
 })
-
-db.connect()
