@@ -10,27 +10,29 @@ export const SignUp = () => {
         password: ''
     });
     const navigate = useNavigate();
+    const handleInput = (e) =>{
+        setValue(prev=>({
+            ...prev,
+            [e.target.name]:[e.target.value]
+        }));
+    }
     const handleSubmit = (e) =>{
         e.preventDefault();
         setValue(value);
         if(value.name&&value.email&&value.password&&value.contact){
             axios.post('http://localhost:3305/signup',value)
                 .then(res=>{
-                    navigate('/');
+                    navigate('/login');
                 })
                 .catch(err=>console.log(err));
         }
     }
 
-    const handleInput = (e) =>{
-        // e.preventDefault();
-        setValue(prev=>({...prev,[e.target.name]:[e.target.value]}))
-    }
 
   return (
     <React.Fragment>
         <div className='d-flex justify-content-center align-items-center bg-secondary vh-100'>
-            <div className='bg-white p-3 rounded-4 w-25'>
+            <div className='bg-white p-3 rounded-4'>
             <h3 className='text-center fw-bolder'>Sign Up</h3>
                 <form action='' onSubmit={handleSubmit}>
                     <div>
@@ -77,7 +79,7 @@ export const SignUp = () => {
                                required
                         />
                     </div>
-                    <Link to='/login' className='m-2 d-block fw-bolder form-control btn btn-primary rounded-4 border-0'>Sign Up</Link>  
+                    <button type='submit' className='m-2 d-block fw-bolder form-control btn btn-primary rounded-4 border-0'>Sign Up</button>  
                 </form>
             </div>
         </div>
