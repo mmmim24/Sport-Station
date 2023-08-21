@@ -1,3 +1,30 @@
+.color1{
+  background-color: #39DD5A ;
+  color: white;
+}
+.color1{
+  background-color: #5A39DD ;
+  color: white;
+}
+.color1{
+  background-color: #DD5A39 ;
+  color: white;
+}
+.c-item{
+  height:50vh;
+}
+.c-item:hover{
+  height: inherit;
+}
+.c-img{
+  height: 50vh;
+  object-fit: cover;
+  filter: brightness(0.5);
+}
+.c-img:hover{
+  filter: brightness(1);
+  height: 100vh;
+}
 *{
   font-family: Raleway;
 }

@@ -1,9 +1,12 @@
 import React from 'react';
+import HomeCarousel from './HomeCarousel';
+import Services from './Services';
 
 export const Home = () => {
     return (
       <React.Fragment>
-        <div className='App'>Home</div>
+        <HomeCarousel/>
+        <Services/>
       </React.Fragment>
     )
   }
