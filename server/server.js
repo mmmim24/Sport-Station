@@ -13,13 +13,13 @@ const db = mysql.createConnection({
     database: 'sportStation'
 })
 
-// app.get('/signup',(req,res)=>{
-//     const q = 'SELECT * FROM users';
-//     db.query(q,(err,data)=>{
-//         if(err) return res.json('an error occurred');
-//         return res.json(data);
-//     })
-// })
+app.get('/users',(req,res)=>{
+    const q = 'SELECT * FROM users';
+    db.query(q,(err,data)=>{
+        if(err) return res.json('an error occurred');
+        return res.json(data);
+    })
+})
 
 app.post('/signup',(req,res)=>{
     const q = 'INSERT INTO users (`uname`,`uemail`,`ucontact`,`upwd`) VALUES(?)';
@@ -37,7 +37,8 @@ app.post('/signup',(req,res)=>{
 
 app.post('/login',(req,res)=>{
     const q = 'SELECT * FROM users WHERE `uemail`=? AND `upwd`=?';
-    db.query(q,[req.body.email,req.body.password],(err,data)=>{
+    const email = req.body.email,password = req.body.password;
+    db.query(q,[email,password],(err,data)=>{
         if(err) 
             return res.json("an error occured");
         if(data.length>0){
