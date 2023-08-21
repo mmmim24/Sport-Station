@@ -1,10 +1,8 @@
 import React from 'react';
 import { Link,useNavigate} from 'react-router-dom';
 import axios from 'axios';
-// import Validation  from '../LoginValidation';
 
 export const Login = () => {
-    // const [err,setErr] = React.useState({});
     const navigate = useNavigate();
     const [value,setValue] = React.useState({
         email: '',
@@ -13,7 +11,6 @@ export const Login = () => {
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-        // setErr(Validation(value));
         setValue(value);
         if(value.email&&value.password){
             axios.post('http://localhost:3305/login',value)
