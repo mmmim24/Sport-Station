@@ -37,7 +37,7 @@ export const Login = () => {
   return (
     <React.Fragment>
         <div className='d-flex justify-content-center align-items-center bg-secondary vh-100'>
-            <div className='bg-white p-3 rounded-4'>
+            <div className='form bg-light p-3 rounded-4'>
                 <h3 className='text-center fw-bolder'>Log In</h3>
                 <form action='post' onSubmit={handleSubmit}>
                     <div>
@@ -60,9 +60,9 @@ export const Login = () => {
                                 required/>
                         {/* {err.password&&<span className='text-danger'>{err.password}</span>} */}
                     </div>
-                    <button type='submit' className='m-2 d-block fw-bolder form-control btn btn-success rounded-4 border-0'>Login</button>
+                    <button type='submit' className='m-2 d-block fw-bolder form-control btn btn-secondary colorOne rounded-4 border-0'>Login</button>
                     <div className='m-2 d-block fw-bolder'>Don't have an account?</div>
-                    <Link to='/signup' className='m-2 d-block fw-bolder form-control btn btn-primary rounded-4 border-0'>Create account</Link>  
+                    <Link to='/signup' className='m-2 d-block fw-bolder form-control btn btn-secondary colorTwo rounded-4 border-0'>Create account</Link>  
                 </form>
             </div>
         </div>

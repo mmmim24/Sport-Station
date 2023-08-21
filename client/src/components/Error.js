@@ -1,4 +1,3 @@
-import Button  from '@mui/material/Button';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -12,12 +11,12 @@ export const Error = () => {
       <Container>
       <div className='error'>
       <img className='w-50' src={NF} alt='404-page-not-found-illustration-2048x1462-azn7c8sp.png'></img>
-      <div className='text-div text-danger'>Ooops! The page you are looking for does not exist!  <SentimentVeryDissatisfiedIcon/></div>
-      <Button className='btn' color='primary' variant='contained'>
+      <div className='text-danger'>Ooops! The page you are looking for does not exist!  <SentimentVeryDissatisfiedIcon/></div>
+      <button className='btn btn-secondary colorThree border-0' >
         <Link to='/' className='lnk'>
           Back to Home
         </Link>
-        </Button>
+        </button>
         </div>
       </Container>
     </React.Fragment>

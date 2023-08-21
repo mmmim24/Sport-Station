@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export const SignUp = () => {
@@ -79,7 +79,7 @@ export const SignUp = () => {
                                required
                         />
                     </div>
-                    <button type='submit' className='m-2 d-block fw-bolder form-control btn btn-primary rounded-4 border-0'>Sign Up</button>  
+                    <button type='submit' className='m-2 d-block fw-bolder form-control btn btn-secondary colorOne rounded-4 border-0'>Sign Up</button>  
                 </form>
             </div>
         </div>
