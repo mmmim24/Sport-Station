@@ -32,7 +32,7 @@ export const SignUp = () => {
   return (
     <React.Fragment>
         <div className='d-flex justify-content-center align-items-center bg-secondary vh-100'>
-            <div className='bg-white p-3 rounded-4'>
+            <div className='bg-white p-5 rounded-4'>
             <h3 className='text-center fw-bolder'>Sign Up</h3>
                 <form action='' onSubmit={handleSubmit}>
                     <div>

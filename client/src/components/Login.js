@@ -37,7 +37,7 @@ export const Login = () => {
   return (
     <React.Fragment>
         <div className='d-flex justify-content-center align-items-center bg-secondary vh-100'>
-            <div className='form bg-light p-3 rounded-4'>
+            <div className='form bg-light p-5 rounded-4'>
                 <h3 className='text-center fw-bolder'>Log In</h3>
                 <form action='post' onSubmit={handleSubmit}>
                     <div>

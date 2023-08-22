@@ -12,7 +12,7 @@ import CFC from '../resources/CFC.jpg';
 export const Products = () => {
   return (
     <React.Fragment>
-      <div><br></br></div>
+      <div className='bg-secondary sec'>
       <Container>
         <Row>
           <Col><Card sx={{ maxWidth: 345 }}>
@@ -61,7 +61,7 @@ export const Products = () => {
         alt="AC Milan Home kit 23/24"
         height="300"
         image={ACM}
-      />
+        />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
         AC Milan Home kit 23/24
@@ -124,7 +124,7 @@ export const Products = () => {
         alt="Man City Third Kit 2023/24"
         height="300"
         image={MCI}
-      />
+        />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
         Man City Third Kit 2023/24
@@ -141,6 +141,7 @@ export const Products = () => {
         </Row>
       <div><br></br></div>
       </Container>
+      </div>
     </React.Fragment>
   )
 }
