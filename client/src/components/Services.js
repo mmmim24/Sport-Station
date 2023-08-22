@@ -6,7 +6,7 @@ import { GiReceiveMoney } from "react-icons/gi";
 const Services = () => {
   return (
     <React.Fragment>
-        <div className="colorTwo">
+        <div className="colorTwo sec">
         <br/><br/><br/>
         <div class="container">
             <div class="row">

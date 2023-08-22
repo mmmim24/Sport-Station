@@ -33,6 +33,9 @@
   background-color: #fff;
   color: #5A39DD;
 }
+.sec{
+  padding: 3rem 0 3rem 0;
+}
 *{
   font-family: Raleway;
 }
@@ -96,9 +99,12 @@
     transform: rotate(360deg);
   }
 }
+ hr{
+  border-width: 3px;
+ }
 
 footer {
-  padding: 14rem 0 9rem 0;
+  padding: 1rem 0 3rem 0;
   
   h3 {
   

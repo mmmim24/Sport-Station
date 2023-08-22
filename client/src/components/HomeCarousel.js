@@ -8,21 +8,18 @@ const HomeCarousel = () => {
             <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active c-item" >
-      <a href = '/singleProducts'><img src={ACM} class="d-block w-100 c-img" alt="AC Milan 2023-24"/></a>
+      <a href = '/singleProducts' alt='featured'><img src={ACM} class="d-block w-100 c-img" alt="AC Milan 2023-24"/></a>
       <div class="carousel-caption d-none d-md-block">
-        <button className='btn btn-danger'> BUY NOW</button>
       </div>
     </div>
     <div class="carousel-item c-item">
-      <a href= '/singleProducts'><img src={LFC} class="d-block w-100 c-img" alt="Liverpool 2023-24"/></a>
+      <a href= '/singleProducts' alt='featured '><img src={LFC} class="d-block w-100 c-img" alt="Liverpool 2023-24"/></a>
       <div class="carousel-caption d-none d-md-block">
-        <button className='btn btn-success colorOne border-0'> BUY NOW</button>
       </div>
     </div>
     <div class="carousel-item c-item">
-      <a href = '/singleProducts'><img src={MCI} class="d-block w-100 c-img" alt="Man City 2023-24"/></a>
+      <a href = '/singleProducts' alt='featured'><img src={MCI} class="d-block w-100 c-img" alt="Man City 2023-24"/></a>
       <div class="carousel-caption d-none d-md-block">
-        <button className='btn btn-primary colorTwo border-0'> BUY NOW</button>
       </div>
     </div>
   </div>
