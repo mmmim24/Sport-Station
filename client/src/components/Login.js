@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link,useNavigate} from 'react-router-dom';
 import axios from 'axios';
+// import AuthContext from '../context/AuthProvider';
 
 export const Login = () => {
     const navigate = useNavigate();
+    // const [auth,setAuth] = React.useContext(AuthContext); 
     const [value,setValue] = React.useState({
         email: '',
         password: ''
@@ -13,7 +15,13 @@ export const Login = () => {
         e.preventDefault();
         setValue(value);
         if(value.email&&value.password){
-            axios.post('http://localhost:3305/login',value)
+            axios.post('http://localhost:3305/login',
+            value,
+            {   
+                headers:{'Content-Type':'application/json'},
+                withCredentials: true
+            }
+            )
                 .then(res=>{
                     if(res.data==="SUCCESS"){
                         navigate('/products');
@@ -23,6 +31,8 @@ export const Login = () => {
                 }
                 )
                 .catch(err=>console.log(err));
+            // const token = response?.data?.token;
+            // const role = response?.data?.role;
         } 
     }
 
