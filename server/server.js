@@ -1,6 +1,7 @@
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
+const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 app.use(cors());
@@ -19,6 +20,45 @@ app.get('/users',(req,res)=>{
         if(err) return res.json('an error occurred');
         return res.json(data);
     })
+})
+
+app.get('/products',(req,res)=>{
+    const q = 'SELECT * FROM products';
+    db.query(q,(err,data)=>{
+        if(err) return res.json('an error occurred');
+        return res.json(data);
+    })
+})
+
+app.post('/addproducts',(req,res)=>{
+    res.setHeader('Content-Type', 'text/plain');
+    // console.log(req.body);
+    const q = 'INSERT INTO products (`pname`,`description`,`image`,`pid`) VALUES(?)';
+    const q2 = 'INSERT INTO size (`pname`,`price`,`s`,`m`,`l`,`xl`,`xxl`) VALUES(?)';
+    const id = uuidv4();
+    const products = [
+        req.body.name,
+        req.body.description,
+        req.body.image,
+        id
+    ]
+    const size = [
+        req.body.name,
+        req.body.price,
+        req.body.quant,
+        req.body.quant,
+        req.body.quant,
+        req.body.quant,
+        req.body.quant
+    ]
+    db.query(q,[products],(err,data)=>{
+        if(err) return res.json("an error occured");
+        // return res.json(data);
+    });
+    db.query(q2,[size],(err,data)=>{
+        if(err) return res.json("an error occured");
+        return res.json(data);
+    });
 })
 
 app.post('/signup',(req,res)=>{
