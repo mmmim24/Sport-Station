@@ -10,17 +10,12 @@ export const Login = () => {
         email: '',
         password: ''
     });
-
     const handleSubmit = (e) =>{
         e.preventDefault();
         setValue(value);
         if(value.email&&value.password){
             axios.post('http://localhost:3305/login',
-            value,
-            {   
-                headers:{'Content-Type':'application/json'},
-                withCredentials: true
-            }
+            value
             )
                 .then(res=>{
                     if(res.data==="SUCCESS"){
@@ -35,6 +30,20 @@ export const Login = () => {
             // const role = response?.data?.role;
         } 
     }
+    React.useEffect(()=>{
+        axios.get('http://localhost:3305')
+          .then(res=>{
+            if(res.data.valid){
+              console.log(res.data.valid);
+              navigate('/products');
+              return;
+            }
+            // else{
+            //   navigate('/');
+            // }
+          })
+          .catch(err=>console.log(err));
+        });
 
     const handleInput = (e) =>{
         // e.preventDefault();
@@ -43,6 +52,7 @@ export const Login = () => {
             [e.target.name]:[e.target.value]
         }));
     }
+    axios.defaults.withCredentials = true;
 
   return (
     <React.Fragment>

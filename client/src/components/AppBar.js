@@ -11,14 +11,32 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import '../index.css';
+import AddProducts from './AddProducts';
 import logo from '../resources/Sport Station.png';
-
+import axios from 'axios';
 const pages = ['Products', 'Pricing', 'Blog','Login'];
-const settings = ['Profile', 'Orders', 'Logout'];
+const settings = ['Profile', 'Orders'];
 
 function ResponsiveAppBar() {
+  const [user,setUser] = React.useState('');
+  const [role,setRole] = React.useState('');
+  const navigate = useNavigate();
+  React.useEffect(()=>{
+    axios.get('http://localhost:3305')
+      .then(res=>{
+        if(res.data.valid){
+          setUser(res.data.user);
+          setRole(res.data.role);
+          console.log(res.data.valid);
+        }
+        // else{
+        //   navigate('/');
+        // }
+      })
+      .catch(err=>console.log(err));
+  });
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -28,7 +46,16 @@ function ResponsiveAppBar() {
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
-
+  
+  axios.defaults.withCredentials = true;
+  const handleLogout =()=>{
+    axios.get('http://localhost:3305/logout')
+    .then(res=>{
+      window.location.reload();
+    })
+    .catch(err=>console.log(err));
+  };
+  
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
@@ -92,7 +119,11 @@ function ResponsiveAppBar() {
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center"><Link to={page.toLowerCase()} className='lnk'>{page}</Link></Typography>
                 </MenuItem>
+                
               ))}
+              {role==1 &&<MenuItem onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center"><Link to='/addproducts' className='lnk'>Add Products</Link></Typography>
+                </MenuItem>}
             </Menu>
           </Box>
           <Typography
@@ -127,6 +158,7 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
+            <span className='lnk'>{user}</span>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <AccountCircle fontSize='large'/>
@@ -153,6 +185,9 @@ function ResponsiveAppBar() {
                   <Typography textAlign="center"><Link to={setting.toLowerCase()} className='lnk'>{setting}</Link></Typography>
                 </MenuItem>
               ))}
+              {user&&<MenuItem onClick={handleCloseUserMenu}>
+                 <Typography textAlign="center"><Link onClick={handleLogout} className='lnk'>Logout</Link></Typography>
+                </MenuItem>}
             </Menu>
           </Box>
         </Toolbar>

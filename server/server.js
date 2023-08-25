@@ -1,17 +1,47 @@
 const express = require('express');
+const port = 3305;
 const mysql = require('mysql');
 const cors = require('cors');
+const session = require('express-session');
+const cp = require('cookie-parser');
+const bp = require('body-parser');
 const { v4: uuidv4 } = require('uuid');
+const Product = require('./routes/ProductsRoute');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin:["http://localhost:3000"],
+    methods:["POST","GET"],
+    credentials:true
+}));
 app.use(express.json());
-
+app.use(cp());
+app.use(bp.json());
+app.use(session({
+    secret : 'qwerty',
+    resave: false,
+    saveUninitialized: false,
+    cookie:{
+        secure: false,
+        maxAge: 3000*24*60*60
+    }
+}))
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
     database: 'sportStation'
+})
+
+app.get('/',(req,res)=>{
+    if(req.session.username){
+        return res.json({valid:true,user:req.session.username,role:req.session.role})
+    }
+    else return res.json({valid:false});
+})
+app.get('/logout',(req,res)=>{
+    req.session.destroy();
+    return res.json("LOGGED OUT");
 })
 
 app.get('/users',(req,res)=>{
@@ -22,28 +52,29 @@ app.get('/users',(req,res)=>{
     })
 })
 
-app.get('/products',(req,res)=>{
-    const q = 'SELECT * FROM products';
-    db.query(q,(err,data)=>{
-        if(err) return res.json('an error occurred');
-        return res.json(data);
-    })
-})
+app.use('/ppp',Product);
+
+// app.get('/products',(req,res)=>{
+//     const q = 'SELECT * FROM products';
+//     db.query(q,(err,data)=>{
+//         if(err) return res.json('an error occurred');
+//         return res.json(data);
+//     })
+// })
 
 app.post('/addproducts',(req,res)=>{
-    res.setHeader('Content-Type', 'text/plain');
-    // console.log(req.body);
-    const q = 'INSERT INTO products (`pname`,`description`,`image`,`pid`) VALUES(?)';
-    const q2 = 'INSERT INTO size (`pname`,`price`,`s`,`m`,`l`,`xl`,`xxl`) VALUES(?)';
-    const id = uuidv4();
+    const q = 'INSERT INTO products (`pid`,`pname`,`description`,`image`,`price`) VALUES(?)';
+    const q2 = 'INSERT INTO stock (`pid`,`price`,`s`,`m`,`l`,`xl`,`xxl`) VALUES(?)';
+    const id = uuidv4().slice(0,13);
     const products = [
+        id,
         req.body.name,
         req.body.description,
         req.body.image,
-        id
+        req.body.price
     ]
     const size = [
-        req.body.name,
+        id,
         req.body.price,
         req.body.quant,
         req.body.quant,
@@ -62,12 +93,16 @@ app.post('/addproducts',(req,res)=>{
 })
 
 app.post('/signup',(req,res)=>{
-    const q = 'INSERT INTO users (`uname`,`uemail`,`ucontact`,`upwd`) VALUES(?)';
+
+    var id = Date.now().toString().slice(-5)+uuidv4().slice(8,13);
+    const q = 'INSERT INTO users (`uid`,`uname`,`uemail`,`ucontact`,`upwd`,`isAdmin`) VALUES(?)';
     const values = [
+        id,
         req.body.name,
         req.body.email,
         req.body.contact,
-        req.body.password
+        req.body.password,
+        0
     ]
     db.query(q,[values],(err,data)=>{
         if(err) return res.json("an error occured");
@@ -77,20 +112,27 @@ app.post('/signup',(req,res)=>{
 
 app.post('/login',(req,res)=>{
     const q = 'SELECT * FROM users WHERE `uemail`=? AND `upwd`=?';
+    const q2 = 'SELECT isAdmin FROM users WHERE `uemail`=? AND `upwd`=?';
     const email = req.body.email,password = req.body.password;
     db.query(q,[email,password],(err,data)=>{
         if(err) 
             return res.json("an error occured");
         if(data.length>0){
+            req.session.username = data[0].uname;
+            req.session.role = data[0].isAdmin;
             return res.json("SUCCESS");
         }
         else{
             return res.json("FAILED");
         }
     });
+    // db.query(q2,[email,password],(err,data)=>{
+    //     if(err) return res.json("role error");
+    //     if(data.len)
+    // });
 }) 
 
 
-app.listen(3305,()=>{
-    console.log('listening...');
+app.listen(port,()=>{
+    console.log(`listening... from ${port}`);
 })

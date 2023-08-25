@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 
 const AddProducts = () => {
-
+  const [role,setRole] = React.useState('');
   const [value,setValue] = React.useState({
     name: '',
     description: '',
@@ -19,20 +19,38 @@ const AddProducts = () => {
   }));
 }
 const handleSubmit = (e) =>{
-    e.preventDefault();
-    setValue(value);
-    if(value.name&&value.description&&value.image){
-        axios.post('http://localhost:3305/addproducts',value)
-            .then(res=>{
-                navigate('/productlist');
-            })
-            .catch(err=>console.log(err));
-    }
+  e.preventDefault();
+  setValue(value);
+  if(value.name&&value.description&&value.image){
+    axios.post('http://localhost:3305/addproducts',value)
+    .then(res=>{
+      navigate('/products');
+    })
+    .catch(err=>console.log(err));
+  }
 }
 
-
-  return (
-    <div className='sec d-flex justify-content-center align-items-center bg-secondary'>
+axios.defaults.withCredentials = true;
+React.useEffect(()=>{
+  axios.get('http://localhost:3305')
+    .then(res=>{
+      if(res.data.valid&&res.data.role){
+        setRole(res.data.role);
+        console.log('====================================');
+        console.log(role);
+        console.log('====================================');
+        
+        return;
+        // navigate('/products');
+      }
+      else{
+        navigate('/');
+      }
+    })
+    .catch(err=>console.log(err));
+});
+return (
+  <div className='sec d-flex justify-content-center align-items-center bg-secondary'>
             <div className='bg-white p-5 rounded-4 w-50'>
             <h3 className='text-center fw-bolder'>Add a Product</h3>
                 <form action='' 

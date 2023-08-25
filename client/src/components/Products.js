@@ -1,14 +1,30 @@
 import React from 'react'
 import {Card,CardMedia,CardContent,CardActions,Button,Typography} from '@mui/material';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export const Products = () => {
+  const navigate = useNavigate();
   const [products,setProducts] = React.useState([]);
   React.useEffect(()=>{
-    axios.get('http://localhost:3305/products')
+    axios.get('http://localhost:3305/ppp/products')
     .then(res=>setProducts(res.data))
     .catch(err=>console.log(err))
   },[])
+  React.useEffect(()=>{
+    axios.get('http://localhost:3305')
+      .then(res=>{
+        if(res.data.valid){
+          console.log(res.data.valid);
+          return;
+          // navigate('/products');
+        }
+        else{
+          navigate('/login');
+        }
+      })
+      .catch(err=>console.log(err));
+  });
   return (
     <React.Fragment>
       <div className='bg-secondary sec'>
