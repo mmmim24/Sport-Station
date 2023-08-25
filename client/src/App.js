@@ -7,6 +7,7 @@ import {Products} from './components/Products';
 import {Pricing} from './components/Pricing';
 import {Blog} from './components/Blog';
 import {Orders} from './components/Orders';
+import SingleProduct from './components/SingleProduct';
 import { Logout } from './components/Logout';
 import { Login } from './components/Login';
 import {SignUp} from './components/SignUp';
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="/login" element = {<Login/>}></Route>
         <Route path="/signup" element = {<SignUp/>}></Route>
         <Route path="/products" element = {<Products/>}></Route>
+        <Route path="/singleproduct" element = {<SingleProduct/>}></Route>
         <Route path="/pricing" element = {<Pricing/>}></Route>
         <Route path="/addproducts" element = {<AddProducts/>}></Route>
         <Route path="/blog" element = {<Blog/>}></Route>

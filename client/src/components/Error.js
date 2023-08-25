@@ -8,7 +8,7 @@ import NF from '../resources/404-page-not-found-illustration-2048x1462-azn7c8sp.
 export const Error = () => {
   return (
     <React.Fragment>
-      <Container>
+      <div className='container bodi'>
       <div className='error'>
       <img className='w-50' src={NF} alt='404-page-not-found-illustration-2048x1462-azn7c8sp.png'></img>
       <div className='text-danger'>Ooops! The page you are looking for does not exist!  <SentimentVeryDissatisfiedIcon/></div>
@@ -18,7 +18,7 @@ export const Error = () => {
         </Link>
         </button>
         </div>
-      </Container>
+      </div>
     </React.Fragment>
   )
 }
