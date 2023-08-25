@@ -7,8 +7,11 @@ const cp = require('cookie-parser');
 const bp = require('body-parser');
 const { v4: uuidv4 } = require('uuid');
 const Product = require('./routes/ProductsRoute');
+// const User = require('./routes/UserRoute');
 
 const app = express();
+app.use('/ppp',Product);
+// app.use('/pp',User);
 app.use(cors({
     origin:["http://localhost:3000"],
     methods:["POST","GET"],
@@ -32,37 +35,22 @@ const db = mysql.createConnection({
     password: '',
     database: 'sportStation'
 })
-
-app.get('/',(req,res)=>{
-    if(req.session.username){
-        return res.json({valid:true,user:req.session.username,role:req.session.role})
-    }
-    else return res.json({valid:false});
-})
-app.get('/logout',(req,res)=>{
-    req.session.destroy();
-    return res.json("LOGGED OUT");
-})
-
-app.get('/users',(req,res)=>{
-    const q = 'SELECT * FROM users';
+app.get('/products',(req,res)=>{
+    const q = 'SELECT * FROM products';
     db.query(q,(err,data)=>{
         if(err) return res.json('an error occurred');
         return res.json(data);
     })
 })
-
-app.use('/ppp',Product);
-
-// app.get('/products',(req,res)=>{
-//     const q = 'SELECT * FROM products';
-//     db.query(q,(err,data)=>{
-//         if(err) return res.json('an error occurred');
-//         return res.json(data);
-//     })
-// })
-
-app.post('/addproducts',(req,res)=>{
+app.get('/product/:id',(req,res)=>{
+    const q = 'SELECT * FROM products WHERE `pid`=?';
+    const id = req.params.id;
+    db.query(q,[id],(err,data)=>{
+        if(err) return res.json('an error occurred');
+        return res.json(data);
+    })
+})
+app.post('/addproduct',(req,res)=>{
     const q = 'INSERT INTO products (`pid`,`pname`,`description`,`image`,`price`) VALUES(?)';
     const q2 = 'INSERT INTO stock (`pid`,`price`,`s`,`m`,`l`,`xl`,`xxl`) VALUES(?)';
     const id = uuidv4().slice(0,13);
@@ -90,6 +78,34 @@ app.post('/addproducts',(req,res)=>{
         if(err) return res.json("an error occured");
         return res.json(data);
     });
+})
+
+app.get('/profile',(req,res)=>{
+    const q = 'SELECT * FROM users WHERE `uname`=?';
+    const email = req.params.uname;
+    db.query(q,[email],(err,data)=>{
+        if(err) return res.json('an error profile occurred');
+        return res.json(data);
+    })
+})
+
+app.get('/',(req,res)=>{
+    if(req.session.username){
+        return res.json({valid:true,user:req.session.username,role:req.session.role})
+    }
+    else return res.json({valid:false});
+})
+app.get('/logout',(req,res)=>{
+    req.session.destroy();
+    return res.json("LOGGED OUT");
+})
+
+app.get('/users',(req,res)=>{
+    const q = 'SELECT * FROM users';
+    db.query(q,(err,data)=>{
+        if(err) return res.json('an error occurred');
+        return res.json(data);
+    })
 })
 
 app.post('/signup',(req,res)=>{
@@ -131,6 +147,11 @@ app.post('/login',(req,res)=>{
     //     if(data.len)
     // });
 }) 
+
+app.get('/logout',(req,res)=>{
+    req.session.destroy();
+    return res.json("LOGGED OUT");
+})
 
 
 app.listen(port,()=>{
