@@ -3,10 +3,10 @@ import HomeCarousel from './HomeCarousel';
 import Services from './Services';
 import Info from './Info';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 export const Home = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   axios.defaults.withCredentials = true;
   React.useEffect(()=>{
     axios.get('http://localhost:3305')
