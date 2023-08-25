@@ -20,6 +20,7 @@ export const Login = () => {
                 .then(res=>{
                     if(res.data==="SUCCESS"){
                         navigate('/products');
+                        window.location.reload();
                     }else{
                         alert('Invalid username and password');
                     }

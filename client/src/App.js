@@ -4,12 +4,15 @@ import { Home } from './components/Home';
 import { Profile } from './components/Profile';
 import { Error } from './components/Error';
 import {Products} from './components/Products';
+import CheckOut from './components/CheckOut';
 import {Pricing} from './components/Pricing';
 import {Blog} from './components/Blog';
 import {Orders} from './components/Orders';
 import SingleProduct from './components/SingleProduct';
 import { Logout } from './components/Logout';
 import { Login } from './components/Login';
+import CartPage from './components/CartPage';
+import AddToCart from './components/AddtoCart';
 import {SignUp} from './components/SignUp';
 import AddProducts from './components/AddProducts';
 import Footer from './components/Footer';
@@ -27,11 +30,13 @@ const App = () => {
         <Route path="/login" element = {<Login/>}></Route>
         <Route path="/signup" element = {<SignUp/>}></Route>
         <Route path="/products" element = {<Products/>}></Route>
-        <Route path="/products/:id" element = {<SingleProduct/>}></Route>
+        <Route path="/product/:id" element = {<SingleProduct/>}></Route>
         <Route path="/pricing" element = {<Pricing/>}></Route>
-        <Route path="/addproducts" element = {<AddProducts/>}></Route>
+        <Route path="/addproduct" element = {<AddProducts/>}></Route>
         <Route path="/blog" element = {<Blog/>}></Route>
         <Route path="/profile" element = {<Profile/>}></Route>
+        <Route path='/cart' element = {<CartPage/>}></Route>
+        <Route path='/addtocart' element = {<AddToCart/>}></Route>
         <Route path="/orders" element = {<Orders/>}></Route>
         <Route path="/logout" element = {<Logout/>}></Route>
         <Route path='*' element={<Error/>}></Route>

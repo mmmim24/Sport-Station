@@ -23,7 +23,7 @@ const SingleProduct = () => {
       .catch(err=>console.log(err));
     });
     React.useEffect(()=>{
-        axios.get('http://localhost:3305/ppp/products/'+id)
+        axios.get('http://localhost:3305/product/'+id)
         .then(res=>{
           // console.log(res.data[0]);
           setProducts(res.data[0])
@@ -36,13 +36,14 @@ const SingleProduct = () => {
           <div className='App'>
             <h3>{products.pname}</h3>
           </div>
-          <img className='rounded mx-auto p-2 w-50 d-block img-fluid' src={products.image}></img>
+          <img className='rounded mx-auto p-2 w-50 d-block img-fluid' src={products.image} alt={products.pname}></img>
           <div className='App'>
             <h5>{products.description}</h5>
           </div>
           <div className='App row'>
             <div className='col'></div>
             {role===0&&<div className='col'><Link to='' className='colorOne fw-bold btn btn-success'>Add to Cart</Link></div>}
+            <div className='col text-dark fw-bolder'>{products.price} ৳</div>
             <div className='col'><Link to='/products' className='colorTwo fw-bold btn btn-primary'>See other products</Link></div>
             <div className='col'></div>
           </div>

@@ -13,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import {Link} from 'react-router-dom';
 import '../index.css';
+import { useCart } from '../context/cart_context';
 import logo from '../resources/Sport Station.png';
 import axios from 'axios';
 const pages = ['Products', 'Pricing','Login'];
@@ -21,6 +22,7 @@ const settings = ['Profile', 'Orders'];
 function ResponsiveAppBar() {
   const [user,setUser] = React.useState('');
   const [role,setRole] = React.useState('');
+  // const [cart,setCart] = useCart();
   React.useEffect(()=>{
     axios.get('http://localhost:3305')
       .then(res=>{
@@ -120,7 +122,7 @@ function ResponsiveAppBar() {
                 
               ))}
               {role===1 &&<MenuItem onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center"><Link to='/addproducts' className='lnk'>Add Products</Link></Typography>
+                  <Typography textAlign="center"><Link to='/addproduct' className='lnk'>Add Product</Link></Typography>
                 </MenuItem>}
             </Menu>
           </Box>
@@ -153,7 +155,7 @@ function ResponsiveAppBar() {
                 <Link to={page.toLowerCase()} className='lnk'>{page}</Link>
               </Button>
             ))}
-            {role===1&&<Button><Link to='/addproducts' className='lnk'>Add Products</Link></Button>}
+            {role===1&&<Button><Link to='/addproduct' className='lnk'>Add Product</Link></Button>}
           </Box>
 
           {user&&<Box sx={{ flexGrow: 0 }}>
@@ -180,11 +182,14 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
               
-              {user&&settings.map((setting) => (
+              {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
                   <Typography textAlign="center"><Link to={setting.toLowerCase()} className='lnk'>{setting}</Link></Typography>
                 </MenuItem>
               ))}
+                {/* {role===0&&<MenuItem onClick={handleCloseUserMenu}>
+                 <Typography textAlign="center"><Link to='/cart' className='lnk'>Cart{cart.length}</Link></Typography>
+                </MenuItem>} */}
                 <MenuItem onClick={handleCloseUserMenu}>
                  <Typography textAlign="center"><Link onClick={handleLogout} className='lnk'>Logout</Link></Typography>
                 </MenuItem>
