@@ -15,7 +15,7 @@ import {Link} from 'react-router-dom';
 import '../index.css';
 import logo from '../resources/Sport Station.png';
 import axios from 'axios';
-const pages = ['Products', 'Pricing', 'Blog','Login'];
+const pages = ['Products', 'Pricing','Login'];
 const settings = ['Profile', 'Orders'];
 
 function ResponsiveAppBar() {
