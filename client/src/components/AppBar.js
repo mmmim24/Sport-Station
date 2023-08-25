@@ -155,6 +155,7 @@ function ResponsiveAppBar() {
                 <Link to={page.toLowerCase()} className='lnk'>{page}</Link>
               </Button>
             ))}
+            {role==1&&<Button><Link to='/addproducts' className='lnk'>Add Products</Link></Button>}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
