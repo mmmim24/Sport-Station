@@ -29,7 +29,7 @@ function ResponsiveAppBar() {
         if(res.data.valid){
           setUser(res.data.user);
           setRole(res.data.role);
-          console.log(res.data.valid);
+          console.log('Appbar');
         }
         // else{
         //   navigate('/');

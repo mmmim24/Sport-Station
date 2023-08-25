@@ -34,7 +34,7 @@ export const Login = () => {
         axios.get('http://localhost:3305')
           .then(res=>{
             if(res.data.valid){
-              console.log(res.data.valid);
+              console.log('Login');
               navigate('/products');
               return;
             }

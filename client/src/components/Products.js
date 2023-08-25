@@ -15,7 +15,7 @@ export const Products = () => {
     axios.get('http://localhost:3305')
       .then(res=>{
         if(res.data.valid){
-          console.log(res.data.valid);
+          console.log('Products');
           return;
           // navigate('/products');
         }
@@ -32,7 +32,7 @@ export const Products = () => {
           <div className='row row-cols-3'>
             {products.map((p)=>{
             return (
-            <div className='col'>
+            <div key={p.pname} className='col'>
                       <Card sx={{ width: 345 }}>
                         <CardMedia
                           component="img"

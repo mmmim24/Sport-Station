@@ -6,32 +6,32 @@ const RMA = 'https://www.soccer.com/wcm/connect/e4a99c57-c3be-4caa-9e1e-3959d7aa
 const HomeCarousel = () => {
   return (
     <React.Fragment>
-      <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active c-item" >
-            <a href = '/singleProducts' alt='featured'><img src={ACM} class="d-block w-100 c-img" alt="AC Milan 2023-24"/></a>
-            <div class="carousel-caption d-none d-md-block"></div>
+      <div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel">
+        <div className="carousel-inner">
+          <div className="carousel-item active c-item" >
+            <a href = '/products' alt='featured'><img src={ACM} className="d-block w-100 c-img" alt="AC Milan 2023-24"/></a>
+            <div className="carousel-caption d-none d-md-block"></div>
           </div>
-          <div class="carousel-item c-item">
-            <a href= '/singleProducts' alt='featured '><img src={LFC} class="d-block w-100 c-img" alt="Liverpool 2023-24"/></a>
-            <div class="carousel-caption d-none d-md-block"></div>
+          <div className="carousel-item c-item">
+            <a href= '/products' alt='featured '><img src={LFC} className="d-block w-100 c-img" alt="Liverpool 2023-24"/></a>
+            <div className="carousel-caption d-none d-md-block"></div>
           </div>
-          <div class="carousel-item c-item">
-            <a href = '/singleProducts' alt='featured'><img src={MCI} class="d-block w-100 c-img" alt="Man City 2023-24"/></a>
-            <div class="carousel-caption d-none d-md-block"></div>
+          <div className="carousel-item c-item">
+            <a href = '/products' alt='featured'><img src={MCI} className="d-block w-100 c-img" alt="Man City 2023-24"/></a>
+            <div className="carousel-caption d-none d-md-block"></div>
           </div>
-          <div class="carousel-item c-item">
-            <a href = '/singleProducts' alt='featured'><img src={RMA} class="d-block w-100 c-img" alt="Real Madrid 2017-18"/></a>
-            <div class="carousel-caption d-none d-md-block"></div>
+          <div className="carousel-item c-item">
+            <a href = '/products' alt='featured'><img src={RMA} className="d-block w-100 c-img" alt="Real Madrid 2017-18"/></a>
+            <div className="carousel-caption d-none d-md-block"></div>
           </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
+        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+          <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span className="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
+        <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+          <span className="carousel-control-next-icon" aria-hidden="true"></span>
+          <span className="visually-hidden">Next</span>
         </button>
       </div>
       </React.Fragment>

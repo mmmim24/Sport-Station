@@ -8,21 +8,21 @@ const Services = () => {
     <React.Fragment>
         <div className="colorTwo sec">
         <br/><br/><br/>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm">
+        <div className="container">
+            <div className="row">
+                <div className="col-sm">
                     <div>
                         <MdSecurity className="icon" />
                         <h2>Contactless Shipping</h2>
                     </div>
                 </div>
-                <div class="col-sm">
+                <div className="col-sm">
                     <div>
                         <TbTruckDelivery className="icon" />
                         <h2>Fast and Free Delivery</h2>
                     </div>
                 </div>
-                <div class="col-sm">
+                <div className="col-sm">
                     <div>
                         <GiReceiveMoney className="icon" />
                         <h2>Cash On Delivery(COD)</h2>
