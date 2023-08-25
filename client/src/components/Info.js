@@ -11,7 +11,7 @@ const Info = () => {
             <div className="col">
               <h2>Ready to get started?</h2>
               <div>
-                <Button className="btn colorTwo"><NavLink to="/contacts" className='lnk'> <h5>Get Started</h5> </NavLink></Button>
+                {/* <Button className="btn colorTwo"><NavLink to="/contacts" className='lnk'> <h5>Get Started</h5> </NavLink></Button> */}
                 <h2>Talk to us today</h2>
               </div>
             </div>
