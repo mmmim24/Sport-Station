@@ -80,14 +80,6 @@ app.post('/addproduct',(req,res)=>{
     });
 })
 
-app.get('/profile',(req,res)=>{
-    const q = 'SELECT * FROM users WHERE `uname`=?';
-    const email = req.params.uname;
-    db.query(q,[email],(err,data)=>{
-        if(err) return res.json('an error profile occurred');
-        return res.json(data);
-    })
-})
 
 app.get('/',(req,res)=>{
     if(req.session.username){
@@ -126,13 +118,20 @@ app.post('/signup',(req,res)=>{
     });
 })
 
+app.post('/profile',(req,res)=>{
+    const q = 'SELECT * FROM users WHERE `uname`=?';
+    const email = req.session.username;
+    db.query(q,[email],(err,data)=>{
+        if(err) return res.json('an error profile occurred');
+        return res.json(data);
+    })
+})
 app.post('/login',(req,res)=>{
     const q = 'SELECT * FROM users WHERE `uemail`=? AND `upwd`=?';
-    const q2 = 'SELECT isAdmin FROM users WHERE `uemail`=? AND `upwd`=?';
     const email = req.body.email,password = req.body.password;
     db.query(q,[email,password],(err,data)=>{
         if(err) 
-            return res.json("an error occured");
+        return res.json("an error occured");
         if(data.length>0){
             req.session.username = data[0].uname;
             req.session.role = data[0].isAdmin;
@@ -142,10 +141,6 @@ app.post('/login',(req,res)=>{
             return res.json("FAILED");
         }
     });
-    // db.query(q2,[email,password],(err,data)=>{
-    //     if(err) return res.json("role error");
-    //     if(data.len)
-    // });
 }) 
 
 app.get('/logout',(req,res)=>{
