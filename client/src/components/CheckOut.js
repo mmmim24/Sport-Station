@@ -68,7 +68,7 @@ const CheckOut = () => {
   }
   return (
     <React.Fragment>
-                    {id}
+                    {/* {id} */}
                     <div className='sec d-flex justify-content-center align-items-center bg-secondary'>
             <div className='bg-white p-5 rounded-4 w-50'>
             <h3 className='text-center fw-bolder'>Checkout</h3>

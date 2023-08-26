@@ -48,7 +48,7 @@ export const Products = () => {
 
   return (
     <React.Fragment>
-      <div className='bg-secondary sec'>
+      <div className='bodi bg-secondary sec'>
         <div className='container'>
           <div className='row row-cols-3'>
             {/* {products.map((p)=>{

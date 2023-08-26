@@ -13,6 +13,9 @@
 .bodi{
   min-height: 80vh;
 }
+.text{
+  text-align: justify;
+}
 .c-item{
   height:50dvh;
 }

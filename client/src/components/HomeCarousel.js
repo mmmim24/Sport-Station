@@ -1,7 +1,7 @@
 import React from 'react';
-const LFC = 'https://d3j2s6hdd6a7rg.cloudfront.net/v2/uploads/media/default/0002/36/thumb_135757_default_news_size_5.jpeg';
+const LFC = 'https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/bltcc519dd7c6c697c6/649ea0fb0c6d81cae0a0ed36/Liverpool_2023-24_away_kit_trio.png?auto=webp&format=pjpg&width=1920&quality=60';
 const ACM = 'https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/bltb6fb91527b2d5f6c/647857f80acce7971a6114c8/AC_Milan_2023-24_home_kit_.png?auto=webp&format=pjpg&width=3840&quality=60';
-const MCI = 'https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgDdeanqUo330eCUEU56OGV2PR5N8PCO0SfIQRqHaPr5mQgJckwpiJpBtClu3PTZa5zY49OYqMJHUsAo2Gj60UBDrePlRZ8T7cfjgl1XrGZX4zmpqM-h37yg3C7_DpqnofeKt6Taf-dJpXr-znYs4Mg2Q38tJ9Oa_UezuF0dLEFaR4bRIlQsljjMDuI28qK/w1200-h630-p-k-no-nu/man%20city%2023%2024%20third%20kit%20%281%29.jpg';
+const MCI = 'https://assets.goal.com/v3/assets/bltcc7a7ffd2fbf71f5/blt5359b91c6d6ee14a/64bf85f11a932227ac4853be/Man_City_I_Third_kit_.png?auto=webp&format=pjpg&width=1920&quality=60';
 const RMA = 'https://www.soccer.com/wcm/connect/e4a99c57-c3be-4caa-9e1e-3959d7aa93e3/RealMadrid1718_HERO.jpg?MOD=AJPERES&CACHEID=ROOTWORKSPACE-e4a99c57-c3be-4caa-9e1e-3959d7aa93e3-o0KBzTj';
 const HomeCarousel = () => {
   return (

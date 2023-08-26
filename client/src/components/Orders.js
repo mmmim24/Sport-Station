@@ -33,7 +33,9 @@ export const Orders = () => {
             <h2>Payment completed</h2>
             <h3>You will get your product in 3-5 days</h3>
           </div>}
-          {role===1&&<div className='row'><div><h1>All Orders</h1></div><br/><br/><br/>
+          {role===1&&<div><h1>All Orders</h1></div>}
+          <br/><br/><br/>
+          {role===1&&<div className='row'>
                   <div className='col'>
                     <h3>OrderID</h3>
                     </div>
@@ -50,12 +52,13 @@ export const Orders = () => {
                     <h3>Details</h3>
                     </div>
                     <div className='col'>
-                    <h3>amount</h3>
+                    <h3>Paid</h3>
                     </div>
                     <div className='col'>
                     <h3>Transaction ID</h3>
                     </div>
                 </div>}
+                <br/><br/><br/>
             {role===1&&<span>{orders.map((order)=>{            
               return(
                 <div className='row'>
