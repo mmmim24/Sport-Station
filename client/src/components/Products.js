@@ -44,7 +44,8 @@ export const Products = () => {
 //       },
 //     })
 // }
-console.log(products);
+// console.log(products);
+
   return (
     <React.Fragment>
       <div className='bg-secondary sec'>
@@ -66,6 +67,31 @@ console.log(products);
               )
             })}            */}
             {products.map((p)=>{
+            function getFullDateAndTimeUTC() {
+              const currentDate = new Date();
+              const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: 'UTC' };
+              const fullDateAndTimeUTC = currentDate.toLocaleDateString(undefined, options);
+              return fullDateAndTimeUTC;
+            }
+            
+            const fullDateAndTimeUTC = getFullDateAndTimeUTC();
+            const oid = Date.now();
+            const checkOut = (e)=>{
+              e.preventDefault();
+              const value = {
+                oid: oid,
+                pid :p.pid,
+                time: fullDateAndTimeUTC,
+                details: p.pname+" price "+p.price,
+                status:'placed'
+              }
+                axios.post('http://localhost:3305/order',value)
+                    .then(res=>{
+                        navigate(`/checkout/${oid}`);
+                    })
+                    .catch(err=>console.log(err));
+              
+            }
             return (
             <div key={p.pid} className='col'>
                       <Card sx={{ width: 345 }}>
@@ -80,13 +106,11 @@ console.log(products);
                           <Typography variant="body2" color="text.secondary">{p.description.slice(0,99)}</Typography>
                         </CardContent>
                         <CardActions>
-                          {role===0&&<Button size="small" 
-                          // onClick={()=>{setCart(...cart,p)}}
-                          >
-                            Add to cart
-                            </Button> }
+                          {role===0&&<Link className='btn colorOne btn-success fw-bold border-0' 
+                          onClick={checkOut}
+                           >Checkout</Link> }
                           <span className='mx-auto'>{p.price} ৳</span>
-                          <Link className='btn colorTwo btn-primary' to={`/product/${p.pid}`}>Learn More</Link>
+                          <Link className='btn colorTwo btn-primary fw-bold border-0' to={`/product/${p.pid}`}>Learn More</Link>
                         </CardActions>
                       </Card><br/><br/>
                     </div>)

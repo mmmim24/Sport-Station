@@ -1,8 +1,10 @@
 const express = require('express');
 const port = 3305;
 const mysql = require('mysql');
+const generateUniqueId = require('generate-unique-id');
 const cors = require('cors');
 const session = require('express-session');
+const date = require('date-and-time');
 const cp = require('cookie-parser');
 const bp = require('body-parser');
 const { v4: uuidv4 } = require('uuid');
@@ -49,6 +51,54 @@ app.get('/product/:id',(req,res)=>{
         if(err) return res.json('an error occurred');
         return res.json(data);
     })
+})
+app.post('/shipping',(req,res)=>{
+    const tid = generateUniqueId();
+    const q = 'INSERT INTO shipping (`oid`,`trxnid`,`city`,`address`,`paid`) VALUES(?)';
+    const q2 = 'INSERT INTO transactions (`trxnid`,`oid`,`amount`) VALUES(?)';
+    const values = [
+        req.body.oid,
+        req.body.id,
+        req.body.city,
+        req.body.address,
+        req.body.amount
+    ]
+    const v2 = [
+        tid,
+        req.body.oid,
+        req.body.amount
+    ]
+    db.query(q,[values],(err,data)=>{
+        if(err) return res.json("an error occured");
+        // return res.json(data);
+    });
+    db.query(q2,[v2],(err,data)=>{
+        if(err) return res.json("an error occured");
+        // return res.json(data);
+    });
+})
+
+app.get('/orders',(req,res)=>{
+    const q = 'SELECT * FROM orders NATURAL JOIN transactions';
+    db.query(q,(err,data)=>{
+        if(err) return res.json('an error occurred');
+        return res.json(data);
+    })
+})
+
+app.post('/order',(req,res)=>{
+    const q = 'INSERT INTO orders (`oid`,`pid`,`time`,`details`,`status`) VALUES(?)';
+    const values = [
+        req.body.oid,
+        req.body.pid,
+        req.body.time,
+        req.body.details,
+        req.body.status
+    ]
+    db.query(q,[values],(err,data)=>{
+        if(err) return res.json("an error occured");
+        return res.json(data);
+    });
 })
 app.post('/addproduct',(req,res)=>{
     const q = 'INSERT INTO products (`pid`,`pname`,`description`,`image`,`price`) VALUES(?)';
@@ -121,6 +171,7 @@ app.post('/signup',(req,res)=>{
 app.post('/profile',(req,res)=>{
     const q = 'SELECT * FROM users WHERE `uname`=?';
     const email = req.session.username;
+    console.log(req.session.username,"here");
     db.query(q,[email],(err,data)=>{
         if(err) return res.json('an error profile occurred');
         return res.json(data);

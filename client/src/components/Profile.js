@@ -18,7 +18,7 @@ export const Profile = () => {
           // navigate('/products');
         }
         else{
-          // navigate('/login');
+          navigate('/login');
         }
       })
       .catch(err=>console.log(err));
@@ -30,6 +30,7 @@ export const Profile = () => {
     })
     .catch(err=>console.log(err))
   },[])
+  console.log(user.uid);
     return (
       <React.Fragment>
         <div className='App sec container bodi'><h3>Welcome {name}</h3><br/><br/>

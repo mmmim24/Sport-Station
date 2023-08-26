@@ -22,7 +22,7 @@ const handleSubmit = (e) =>{
   e.preventDefault();
   setValue(value);
   if(value.name&&value.description&&value.image){
-    axios.post('http://localhost:3305/addproducts',value)
+    axios.post('http://localhost:3305/addproduct',value)
     .then(res=>{
       navigate('/products');
     })

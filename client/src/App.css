@@ -11,7 +11,7 @@
   color: white;
 }
 .bodi{
-  height: 80vh;
+  min-height: 80vh;
 }
 .c-item{
   height:50dvh;

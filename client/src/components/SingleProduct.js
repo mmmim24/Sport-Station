@@ -5,7 +5,7 @@ import { useNavigate, useParams,Link } from 'react-router-dom'
 const SingleProduct = () => {
     const {id }= useParams();
     const [role,setRole]=React.useState('');
-    const[products,setProducts] =  React.useState({})
+    const[product,setProduct] =  React.useState({})
     const navigate = useNavigate();
     React.useEffect(()=>{
       axios.get('http://localhost:3305')
@@ -14,7 +14,7 @@ const SingleProduct = () => {
           console.log('singleproduct');
           setRole(res.data.role);
           return;
-          // navigate('/products');
+          // navigate('/product');
         }
         else{
           navigate('/login');
@@ -26,25 +26,52 @@ const SingleProduct = () => {
         axios.get('http://localhost:3305/product/'+id)
         .then(res=>{
           // console.log(res.data[0]);
-          setProducts(res.data[0])
+          setProduct(res.data[0])
         })
         .catch(err=>console.log(err))
       },[id])
+      function getFullDateAndTimeUTC() {
+        const currentDate = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: 'UTC' };
+        const fullDateAndTimeUTC = currentDate.toLocaleDateString(undefined, options);
+        return fullDateAndTimeUTC;
+      }
+      
+      const fullDateAndTimeUTC = getFullDateAndTimeUTC();
+      const oid = Date.now();
+      const checkOut = (e)=>{
+        e.preventDefault();
+        const value = {
+          oid: oid,
+          pid :product.pid,
+          time: fullDateAndTimeUTC,
+          details: product.pname+" price "+product.price,
+          status:'placed'
+        }
+          axios.post('http://localhost:3305/order',value)
+              .then(res=>{
+                  navigate(`/checkout/${oid}`);
+              })
+              .catch(err=>console.log(err));
+        
+      }
   return (
     <div className='App'>
         <div className='sec container'>
           <div className='App'>
-            <h3>{products.pname}</h3>
+            <h3>{product.pname}</h3>
           </div>
-          <img className='rounded mx-auto p-2 w-50 d-block img-fluid' src={products.image} alt={products.pname}></img>
+          <img className='rounded mx-auto p-2 w-50 d-block img-fluid' src={product.image} alt={product.pname}></img>
           <div className='App'>
-            <h5>{products.description}</h5>
+            <h5>{product.description}</h5>
           </div>
           <div className='App row'>
             <div className='col'></div>
-            {role===0&&<div className='col'><Link to='' className='colorOne fw-bold btn btn-success'>Add to Cart</Link></div>}
-            <div className='col text-dark fw-bolder'>{products.price} ৳</div>
-            <div className='col'><Link to='/products' className='colorTwo fw-bold btn btn-primary'>See other products</Link></div>
+              {role===0&&<div className='col'><Link
+              onClick={checkOut}
+               className='colorOne fw-bold btn btn-success border-0'>Checkout</Link></div>}
+            <div className='col text-dark fw-bolder'>{product.price} ৳</div>
+            <div className='col'><Link to='/products' className='colorTwo fw-bold btn btn-primary border-0'>See other product</Link></div>
             <div className='col'></div>
           </div>
         </div>
