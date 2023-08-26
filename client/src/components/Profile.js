@@ -12,6 +12,7 @@ export const Profile = () => {
       .then(res=>{
         if(res.data.valid){
           setName(res.data.user);
+          console.log(res.data.user);
           console.log('Profile');
           return;
           // navigate('/products');
@@ -23,16 +24,51 @@ export const Profile = () => {
       .catch(err=>console.log(err));
   });
   React.useEffect(()=>{
-    axios.get('http://localhost:3305/profile',name)
+    axios.post('http://localhost:3305/profile')
     .then(res=>{
-      console.log(res.data);
-      setUser(res.data)
+      setUser(res.data[0])
     })
     .catch(err=>console.log(err))
   },[])
     return (
       <React.Fragment>
-        <div className='App bodi'>Profile{name}</div>
+        <div className='App sec container bodi'><h3>Welcome {name}</h3><br/><br/>
+        <div className='row'>
+          <div className='col'>
+            <h5>
+              <b>EMAIL</b>
+            </h5>
+          </div>
+          <div className='col'>
+            <h5>
+              <b>contact</b>
+            </h5>
+          </div>
+          <div className='col'>
+            <h5>
+              <b>ID</b>
+            </h5>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col'>
+            <h5>
+              {user.uemail}
+            </h5>
+          </div>
+          <div className='col'>
+            <h5>
+              {user.ucontact}
+            </h5>
+          </div>
+          <div className='col'>
+            <h5>
+              {user.uid}
+            </h5>
+          </div>
+        </div>
+        </div>
+        
       </React.Fragment>
     )
   }
