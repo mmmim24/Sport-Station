@@ -71,7 +71,7 @@ const Product = ({pid,pname,description,image,price}) => {
                           // onClick={addtoCart}
                            >Add to cart</Button> }
                             <span className='mx-auto'>{price} ৳</span>
-                          <Link className='btn colorTwo btn-primary' to={`/product/${pid}`}>Learn More</Link>
+                          {role===0&&<Link className='btn colorTwo btn-primary' to={`/product/${pid}`}>Learn More</Link>}
                         </CardActions>
                       </Card><br/><br/>
                     </div>)

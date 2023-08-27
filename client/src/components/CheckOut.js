@@ -1,21 +1,42 @@
 import React from 'react'
-import { useNavigate, useParams,Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import { useCart } from '../context/cart_context';
 import axios from 'axios'
 
 const CheckOut = () => {
-  const {id} = useParams();
+  // const {id} = useParams();
   const navigate = useNavigate();
+  const {cart,setCart} = useCart();
   var arr = [];
-  const [user,setUser] = React.useState([]);
-  const [name,setName] = React.useState('');
+  // const [user,setUser] = React.useState([]);
+  const [id,setId] = React.useState([]);
+  const clearCartItem = () =>{
+    try{
+      let myCart = [...cart];
+      myCart = [];
+      setCart(myCart);
+      localStorage.setItem('cart',JSON.stringify(myCart));
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
+  // const [role,setRole] = React.useState('');
+  // const [name,setName] = React.useState('');
   axios.defaults.withCredentials = true;
   React.useEffect(()=>{
     axios.get('http://localhost:3305')
       .then(res=>{
         if(res.data.valid){
-          setName(res.data.user);
-          console.log(res.data.user);
-          console.log('Profile');
+          // setName(res.data.user);
+
+          setId(res.data.id);
+          // console.log(res.data.user);
+          // console.log('Checkout');
+          // console.log(name);
+          // arr = name;
+          console.log(id);
           return;
           // navigate('/products');
         }
@@ -25,47 +46,110 @@ const CheckOut = () => {
       })
       .catch(err=>console.log(err));
   });
-  React.useEffect(()=>{
-    axios.post('http://localhost:3305/profile')
-    .then(res=>{
-      setUser(res.data[0]);
-    })
-    .catch(err=>console.log(err))
-  },[])
-  const handleInput = (e) =>{
-    setValue(prev=>({
-      ...prev,
-      [e.target.name]:[e.target.value]
-    }))};
-    
-    console.log(user.uid);
-    // const sx = dat.uid;
+  // React.useEffect(()=>{
+  //   axios.post('http://localhost:3305/profile')
+  //   .then(res=>{
+  //     setUser(res.data[0]);
+  //   })
+  //   .catch(err=>console.log(err))
+  // },[])
+  
+  // console.log(user.uid);
+  // const sx = dat.uid;
     // console.log(sx);
-    // console.log(arr);
+    console.log(arr);
+    var txt;
+    const opIn = (e) =>{
+      e.preventDefault();
+      txt = e.target.value;
+      // setValue(value2.method)
+    }
     // console.log(arr.uid);
-
+    function getFullDateAndTimeUTC() {
+            const currentDate = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: 'UTC' };
+            const fullDateAndTimeUTC = currentDate.toLocaleDateString(undefined, options);
+            return fullDateAndTimeUTC;
+          }
+          
+          const fullDateAndTimeUTC = getFullDateAndTimeUTC();
+          const oid = Date.now();
     
     const [value,setValue] = React.useState({
-      oid: id,
-      id: user.uid,
+      oid: oid,
       city: '',
       address: '',
       amount: 0
     });
-    console.log(value);
-  const [role,setRole] = React.useState('');
-  axios.defaults.withCredentials = true;
-  const handleSubmit = (e) =>{
+    const value2 = {
+      oid: value.oid,
+      uid :id,
+      time: fullDateAndTimeUTC,
+      details: 'bulk',
+      status:'placed',
+      method: ''
+    };
+    console.log(txt);
+    axios.defaults.withCredentials = true;
+    const handleInput = (e) =>{
+      setValue(prev=>({
+        ...prev,
+        [e.target.name]:[e.target.value]
+      }))
+      // setValue2(prev=>({
+      //   ...prev,
+      //   [e.target.name]:[e.target.value]
+      // })),
+    }
+    const handleSubmit = (e) =>{
     e.preventDefault();
     setValue(value);
-    if(value.city&&value.address&&value.amount){
+    // setValue2(value);
+    if(value.city&&value.address){
       axios.post('http://localhost:3305/shipping',value)
       .then(res=>{
-        navigate('/orders');
+        // navigate('/orders');
       })
       .catch(err=>console.log(err));
     }
+    if(value2.oid&&value2.uid&&value2.time){
+      // value2.method=txt;
+      var url;
+      if(txt==='cod'){
+        url='/log';
+      } 
+      else{
+        url = '/payment';
+      }
+      {
+        axios.post('http://localhost:3305/order',value2)
+        .then(res=>{
+          navigate(url);
+        })
+        .catch(err=>console.log(err));
+      }
+    }
+      clearCartItem();
+    console.log(value);
+    console.log(value2);
   }
+    
+      // const checkOut = (e)=>{
+      //   e.preventDefault();
+      //   const value = {
+      //     oid: oid,
+      //     uid :uid,
+      //     time: fullDateAndTimeUTC,
+      //     details: product.pname+" price "+product.price,
+      //     status:'placed'
+      //   }
+      //     axios.post('http://localhost:3305/order',value)
+      //         .then(res=>{
+      //             navigate(`/checkout/${oid}`);
+      //         })
+      //         .catch(err=>console.log(err));
+        
+      // }
   return (
     <React.Fragment>
                     {/* {id} */}
@@ -95,8 +179,21 @@ const CheckOut = () => {
                           required
                         />
                     </div>
-                    <div className='mb-3'>
-                       
+                    <div >
+                    <p className='m-2'>
+
+                    We provide cash on delivery free of charge .<br/>
+                        You can also pay in advance.
+                    </p>
+                    </div>
+                    <div>
+                      <label className='m-2 fw-bolder' htmlFor='method'>Choose your payment method</label>
+                      <select name="method" id="method" onChange={opIn}>
+                        <option value="cod">COD</option>
+                        <option value="adv">Pay Online</option>
+                      </select>  
+                    </div>
+                    <div>
                       <label className='m-2 fw-bolder' htmlFor='amount'>Amount</label>
                       <input 
                         className='m-2 d-inline rounded-3 border-2' 
@@ -104,13 +201,13 @@ const CheckOut = () => {
                         type='number'
                         min={100}
                         onChange={handleInput}
-                        required
-                      /> 
+                        // required
+                        /> 
                     </div>
                     <div className='mb-3'>
                     </div>
                     
-                    <button type='submit' className='m-2 d-block fw-bolder form-control btn btn-secondary colorOne rounded-4 border-0'>Pay and Complete Order</button>  
+                    <button type='submit' className='m-2 d-block fw-bolder form-control btn btn-secondary colorOne rounded-4 border-0'>Complete Order</button>  
                 </form>
             </div>
         </div>

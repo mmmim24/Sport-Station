@@ -8,6 +8,7 @@ const AddProducts = () => {
     name: '',
     description: '',
     image: '',
+    cat: '',
     quant: '',
     price: ''
   });
@@ -21,7 +22,7 @@ const AddProducts = () => {
 const handleSubmit = (e) =>{
   e.preventDefault();
   setValue(value);
-  if(value.name&&value.description&&value.image){
+  if(value.name&&value.description&&value.image&&value.cat&&value.quant){
     axios.post('http://localhost:3305/addproduct',value)
     .then(res=>{
       navigate('/products');
@@ -87,6 +88,17 @@ return (
                       />
                     </div>
                     <div className='mb-3'>
+                      <div>
+
+                      <label className='m-2 fw-bolder' htmlFor='quant'>Category</label>
+                      <input 
+                        className='m-2 d-inline rounded-3 border-2 w-25' 
+                        name='cat' 
+                        type='text'
+                        onChange={handleInput}
+                        required
+                        /> 
+                        </div>
                       <label className='m-2 fw-bolder' htmlFor='quant'>Quantity</label>
                       <input 
                         className='m-2 d-inline rounded-3 border-2 w-25' 
@@ -97,7 +109,7 @@ return (
                       /> 
                       <label className='m-2 fw-bolder' htmlFor='price'>Price</label>
                       <input 
-                        className='m-2 d-inline rounded-3 border-2' 
+                        className='m-2 d-inline rounded-3 border-2 w-25' 
                         name='price' 
                         type='number'
                         onChange={handleInput}

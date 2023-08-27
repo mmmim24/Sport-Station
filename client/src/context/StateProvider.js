@@ -1,5 +1,5 @@
 import React, { useContext, useReducer } from 'react'
-import Reducer from '../hooks/Reducer';
+// import Reducer from '../hooks/Reducer';
 
 export const Context  =  React.createContext();
 // data layer 

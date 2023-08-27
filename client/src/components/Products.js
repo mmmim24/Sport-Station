@@ -1,33 +1,37 @@
-import React from 'react'
-import {Card,CardMedia,CardContent,CardActions,Button,Typography} from '@mui/material';
+import React from 'react';
+import {Card,CardMedia,CardContent,CardActions,Typography,CardActionArea} from '@mui/material';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
-import Product  from './Product';
-import { useStateValue } from '../context/StateProvider';
+import { Link } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
+// import Product  from './Product';
+// import { useStateValue } from '../context/StateProvider';
 import { useCart } from '../context/cart_context';
 
 export const Products = () => {
   // const [dstate,dispatch] = useStateValue();
-  // const [cart,setCart] = useCart();
-  const navigate = useNavigate();
+  var k=0;
+  const {cart,setCart} = useCart();
+  // const navigate = useNavigate();
   const [role,setRole] = React.useState('');
-  const[products,setProducts] =  React.useState([])
+  const [user,setUser] = React.useState('');
+  const[products,setProducts] =  React.useState([]);
   React.useEffect(()=>{
     axios.get('http://localhost:3305/products')
     .then(res=>setProducts(res.data))
     .catch(err=>console.log(err))
-  },[])
+  },[products])
   React.useEffect(()=>{
     axios.get('http://localhost:3305')
       .then(res=>{
         if(res.data.valid){
           setRole(res.data.role);
-          console.log('Products');
+          setUser(res.data.user);
+          // console.log('Products');
           return;
           // navigate('/products');
         }
         else{
-          navigate('/login');
+          // navigate('/login');
         }
       })
       .catch(err=>console.log(err));
@@ -51,68 +55,43 @@ export const Products = () => {
       <div className='bodi bg-secondary sec'>
         <div className='container'>
           <div className='row row-cols-3'>
-            {/* {products.map((p)=>{
-              return(
-                <span>
-                  
-                <Product
-                  pid={p.pid}
-                  pname={p.pname}
-                  description={p.description}
-                  image={p.image}
-                  price={p.price}
-                  />
-                <p>{cart.length}</p>
-                  </span>
-              )
-            })}            */}
             {products.map((p)=>{
-            function getFullDateAndTimeUTC() {
-              const currentDate = new Date();
-              const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: 'UTC' };
-              const fullDateAndTimeUTC = currentDate.toLocaleDateString(undefined, options);
-              return fullDateAndTimeUTC;
-            }
-            
-            const fullDateAndTimeUTC = getFullDateAndTimeUTC();
-            const oid = Date.now();
-            const checkOut = (e)=>{
-              e.preventDefault();
-              const value = {
-                oid: oid,
-                pid :p.pid,
-                time: fullDateAndTimeUTC,
-                details: p.pname+" price "+p.price,
-                status:'placed'
-              }
-                axios.post('http://localhost:3305/order',value)
-                    .then(res=>{
-                        navigate(`/checkout/${oid}`);
-                    })
-                    .catch(err=>console.log(err));
-              
-            }
-            return (
-            <div key={p.pid} className='col'>
-                      <Card sx={{ width: 345 }}>
+              k=k+1
+              return (
+                <div key={k} className='col'>
+                  <Card sx={{ width: 345,height: 450 }}>
+                    <CardActionArea >
+                      <a href={`/product/${p.pid}`}>
                         <CardMedia
                           component="img"
                           alt={p.pname}
-                          height="300"
+                          height="250"
                           image={p.image}
                         />
-                        <CardContent>
-                          <Typography gutterBottom variant="h5" component="div">{p.pname.slice(0,27)}</Typography>
-                          <Typography variant="body2" color="text.secondary">{p.description.slice(0,99)}</Typography>
-                        </CardContent>
-                        <CardActions>
-                          {role===0&&<Link className='btn colorOne btn-success fw-bold border-0' 
-                          onClick={checkOut}
-                           >Checkout</Link> }
-                          <span className='mx-auto'>{p.price} ৳</span>
-                          <Link className='btn colorTwo btn-primary fw-bold border-0' to={`/product/${p.pid}`}>Learn More</Link>
-                        </CardActions>
-                      </Card><br/><br/>
+                      </a>
+                      <CardContent
+                          sx={{ width: 345,height: 150 }}
+                        >
+                        <Typography gutterBottom variant="h5" component="div">{p.pname.slice(0,27)}</Typography>
+                        <Typography variant="body2" color="text.secondary">{p.description.slice(0,99)}</Typography>
+                      </CardContent>
+                    </CardActionArea>
+                    <CardActions
+                      sx={{ width: 345,height: 50 }}
+                      >
+                      <Link className='btn colorOne btn-danger fw-bold border-0' 
+                        onClick={()=>{
+                        setCart([...cart,p]);
+                        localStorage.setItem('cart',JSON.stringify([...cart,p]));
+                        toast.success("Added to cart");
+                       }}
+                        >
+                        Add to cart<Toaster/></Link> 
+                          <div className='mx-auto fw-bolder fs-4'>{p.price} ৳</div>
+                          
+                          
+                      </CardActions>
+                  </Card><br/><br/>
                     </div>)
               })}
           </div>

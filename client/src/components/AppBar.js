@@ -13,6 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import {Link} from 'react-router-dom';
 import '../index.css';
+import AddShoppingCartSharpIcon from '@mui/icons-material/AddShoppingCartSharp';
 import { useCart } from '../context/cart_context';
 import logo from '../resources/Sport Station.png';
 import axios from 'axios';
@@ -22,7 +23,7 @@ const settings = ['Profile', 'Orders'];
 function ResponsiveAppBar() {
   const [user,setUser] = React.useState('');
   const [role,setRole] = React.useState('');
-  // const [cart,setCart] = useCart();
+  const {cart} = useCart();
   React.useEffect(()=>{
     axios.get('http://localhost:3305')
       .then(res=>{
@@ -157,9 +158,9 @@ function ResponsiveAppBar() {
             ))}
             {role===1&&<Button><Link to='/addproduct' className='lnk'>Add Product</Link></Button>}
           </Box>
-
+          <Link to='/cart' className='lnk'><AddShoppingCartSharpIcon className='ms-1 g-col-8' style={{ fill: '#000000' }}/><span>{cart.length}</span>&nbsp;&nbsp;</Link>
           {user&&<Box sx={{ flexGrow: 0 }}>
-            <span className='lnk'>{user}</span>
+            <span className='lnk'>{user}</span>&nbsp;&nbsp;
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <AccountCircle fontSize='large'/>

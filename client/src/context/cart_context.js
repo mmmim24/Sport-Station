@@ -4,8 +4,12 @@ const CartContext = React.createContext();
 
 const CartProvider = ({ children }) => {
   const [cart, setCart] = React.useState([]);
+  React.useEffect(()=>{
+    let cartItem =localStorage.getItem('cart');
+    if(cartItem) setCart(JSON.parse(cartItem));
+  },[])
   return (
-    <CartContext.Provider value={{cart,setCart }}>
+    <CartContext.Provider value={{cart,setCart}}>
       {children}
     </CartContext.Provider>
   );

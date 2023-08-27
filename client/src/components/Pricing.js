@@ -10,7 +10,7 @@ export const Pricing = () => {
           <div className='App bodi container  sec'>
             <div className='row'>
               <h2>Introducing the exceptional 300 Taka Local Jersey</h2>      
-              <div className=''><img className='rounded-5 w-75 mx-auto img-fluid d-block' src={ACM}></img></div>
+              <div className=''><img alt='img' className='rounded-5 w-75 mx-auto img-fluid d-block' src={ACM}></img></div>
             </div>
             <div className='row d-flex text'>
             A true testament to quality, comfort, and style. Crafted with meticulous attention to detail, this jersey stands as a pinnacle of local textile innovation, designed to cater to your fashion and comfort needs.
@@ -30,7 +30,7 @@ Elevate your wardrobe with the 300 Taka Local Jersey – where GSM, fabrics, and
             
             <div className='row'>
               <h2>Introducing the Thai Premium Jersey </h2>      
-              <div className=''><img className='rounded-5 w-75 mx-auto img-fluid d-block' src={LFC}></img></div>
+              <div className=''><img alt='img' className='rounded-5 w-75 mx-auto img-fluid d-block' src={LFC}></img></div>
             </div>
             <div className='row d-flex text'>
             Introducing the Thai Premium Jersey – an epitome of luxury, comfort, and superior craftsmanship. Meticulously curated, this jersey sets new standards in the realm of fashion, offering a blend of opulent aesthetics and unparalleled quality.
@@ -50,7 +50,7 @@ Elevate your wardrobe to unprecedented heights with the Thai Premium Jersey – 
 
             <div className='row'>
               <h2>Introducing the Player Version Jersey – the</h2>      
-              <div className=''><img className='rounded-5 w-75 mx-auto img-fluid d-block' src={RMA}></img></div>
+              <div className=''><img alt='img' className='rounded-5 w-75 mx-auto img-fluid d-block' src={RMA}></img></div>
             </div>
             <div className='row d-flex text'>
             the pinnacle of sports apparel, meticulously engineered to meet the demands of elite athletes and fervent sports enthusiasts. Crafted with an unwavering commitment to excellence, this jersey redefines the standards of quality, offering unparalleled performance and a touch of prestige.
@@ -67,7 +67,7 @@ This isn't just a jersey; it's a commitment to excellence. The Player Version Je
             </div>
             <div className='row'>
               {/* <h2>Introducing the Thai Premium Jersey </h2>       */}
-              <div className=''><img className='rounded-5 w-75 mx-auto img-fluid d-block' src={MCI}></img></div>
+              <div className=''><img alt='img' className='rounded-5 w-75 mx-auto img-fluid d-block' src={MCI}></img></div>
             </div>
           </div>
         </React.Fragment>

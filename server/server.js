@@ -12,11 +12,11 @@ const Product = require('./routes/ProductsRoute');
 // const User = require('./routes/UserRoute');
 
 const app = express();
-app.use('/ppp',Product);
+// app.use('/ppp',Product);
 // app.use('/pp',User);
 app.use(cors({
-    origin:["http://localhost:3000"],
-    methods:["POST","GET"],
+    origin:["http://localhost:3000","http://10.100.174.86:3000","http://127.0.0.1:3000","http://localhost:3306/","http://10.100.167.178:3000"],
+    methods:["POST","GET","PATCH","DELETE"],
     credentials:true
 }));
 app.use(express.json());
@@ -52,13 +52,22 @@ app.get('/product/:id',(req,res)=>{
         return res.json(data);
     })
 })
+app.get('/productsize/:id',(req,res)=>{
+    const q = 'SELECT * FROM stock WHERE `pid`=?';
+    const id = req.params.id;
+    db.query(q,[id],(err,data)=>{
+        if(err) return res.json('an error occurred');
+        return res.json(data);
+    })
+})
+
 app.post('/shipping',(req,res)=>{
     const tid = generateUniqueId();
     const q = 'INSERT INTO shipping (`oid`,`trxnid`,`city`,`address`,`paid`) VALUES(?)';
     const q2 = 'INSERT INTO transactions (`trxnid`,`oid`,`amount`) VALUES(?)';
     const values = [
         req.body.oid,
-        req.body.id,
+        tid,
         req.body.city,
         req.body.address,
         req.body.amount
@@ -78,8 +87,17 @@ app.post('/shipping',(req,res)=>{
     });
 })
 
+app.get('/orders/:id',(req,res)=>{
+    const q = 'SELECT * FROM orders WHERE `uid`=?';
+    id = req.params.uid;
+    db.query(q,[id],(err,data)=>{
+        if(err) return res.json('an error occurred');
+        return res.json(data);
+    })
+})
+
 app.get('/orders',(req,res)=>{
-    const q = 'SELECT * FROM orders NATURAL JOIN transactions';
+    const q = 'SELECT * FROM orders';
     db.query(q,(err,data)=>{
         if(err) return res.json('an error occurred');
         return res.json(data);
@@ -87,13 +105,14 @@ app.get('/orders',(req,res)=>{
 })
 
 app.post('/order',(req,res)=>{
-    const q = 'INSERT INTO orders (`oid`,`pid`,`time`,`details`,`status`) VALUES(?)';
+    const q = 'INSERT INTO orders (`oid`,`uid`,`time`,`details`,`status`,`method`) VALUES(?)';
     const values = [
         req.body.oid,
-        req.body.pid,
+        req.body.uid,
         req.body.time,
         req.body.details,
-        req.body.status
+        req.body.status,
+        req.body.method
     ]
     db.query(q,[values],(err,data)=>{
         if(err) return res.json("an error occured");
@@ -101,7 +120,7 @@ app.post('/order',(req,res)=>{
     });
 })
 app.post('/addproduct',(req,res)=>{
-    const q = 'INSERT INTO products (`pid`,`pname`,`description`,`image`,`price`) VALUES(?)';
+    const q = 'INSERT INTO products (`pid`,`pname`,`description`,`image`,`category`,`price`,`imageback`) VALUES(?)';
     const q2 = 'INSERT INTO stock (`pid`,`price`,`s`,`m`,`l`,`xl`,`xxl`) VALUES(?)';
     const id = uuidv4().slice(0,13);
     const products = [
@@ -109,7 +128,8 @@ app.post('/addproduct',(req,res)=>{
         req.body.name,
         req.body.description,
         req.body.image,
-        req.body.price
+        req.body.price,
+
     ]
     const size = [
         id,
@@ -133,7 +153,7 @@ app.post('/addproduct',(req,res)=>{
 
 app.get('/',(req,res)=>{
     if(req.session.username){
-        return res.json({valid:true,user:req.session.username,role:req.session.role})
+        return res.json({valid:true,user:req.session.username,role:req.session.role,id:req.session.uid})
     }
     else return res.json({valid:false});
 })
@@ -186,6 +206,7 @@ app.post('/login',(req,res)=>{
         if(data.length>0){
             req.session.username = data[0].uname;
             req.session.role = data[0].isAdmin;
+            req.session.uid = data[0].uid;
             return res.json("SUCCESS");
         }
         else{
