@@ -26,7 +26,7 @@ const CheckOut = () => {
   // const [name,setName] = React.useState('');
   axios.defaults.withCredentials = true;
   React.useEffect(()=>{
-    axios.get('http://localhost:3305')
+    axios.post('http://localhost:3305')
       .then(res=>{
         if(res.data.valid){
           // setName(res.data.user);
@@ -58,6 +58,10 @@ const CheckOut = () => {
   // const sx = dat.uid;
     // console.log(sx);
     // console.log(arr);// console.log(arr.uid);
+    var details = '';
+    cart.map(p=>{
+      details += p.pname +`,\n`;
+    })
     function getFullDateAndTimeUTC() {
             const currentDate = new Date();
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: 'UTC' };
@@ -78,10 +82,11 @@ const CheckOut = () => {
       oid: value.oid,
       uid :id,
       time: fullDateAndTimeUTC,
-      details: 'bulk',
+      details: details,
       status:'placed',
       method: 'Cash on Delivery'
     };
+    console.log(value2.details);
     var txt,val,x;
     const opIn = (e) =>{
       e.preventDefault();
@@ -91,7 +96,7 @@ const CheckOut = () => {
       value2.method = txt;
       console.log(value2.method);
     }
-    console.log(val,txt);
+    // console.log(val,txt);
     axios.defaults.withCredentials = true;
     const handleInput = (e) =>{
       setValue(prev=>({

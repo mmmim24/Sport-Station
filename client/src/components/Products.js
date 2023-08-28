@@ -21,7 +21,7 @@ export const Products = () => {
     .catch(err=>console.log(err))
   },[products])
   React.useEffect(()=>{
-    axios.get('http://localhost:3305')
+    axios.post('http://localhost:3305')
       .then(res=>{
         if(res.data.valid){
           setRole(res.data.role);

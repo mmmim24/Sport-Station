@@ -32,7 +32,7 @@ export const Login = () => {
         } 
     }
     React.useEffect(()=>{
-        axios.get('http://localhost:3305')
+        axios.post('http://localhost:3305')
           .then(res=>{
             if(res.data.valid){
               console.log('Login');

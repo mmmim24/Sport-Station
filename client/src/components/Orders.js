@@ -11,7 +11,7 @@ export const Orders = () => {
   const [uorders,setUorders] = React.useState([]);
   const navigate = useNavigate();
   React.useEffect(()=>{
-    axios.get('http://localhost:3305')
+    axios.post('http://localhost:3305')
       .then(res=>{
         if(res.data.valid){
           setId(res.data.id);
@@ -34,16 +34,16 @@ export const Orders = () => {
     }
   // console.log(id);
   React.useEffect(()=>{
-    axios.get('http://localhost:3305/orders')
+    axios.post('http://localhost:3305/orders')
     .then(res=>setOrders(res.data))
     .catch(err=>console.log(err))
   },[])
   React.useEffect(()=>{
-    axios.get('http://localhost:3305/orders/'+id)
+    axios.post('http://localhost:3305/uorders/'+id)
     .then(res=>setUorders(res.data))
     .catch(err=>console.log(err))
-  },[])
-  console.log(orders);
+  },[id])
+  // console.log(id);
   return (
     <Fragment>
       <div className='container bodi sec App'>

@@ -9,7 +9,7 @@ export const Home = () => {
   // const navigate = useNavigate();
   axios.defaults.withCredentials = true;
   React.useEffect(()=>{
-    axios.get('http://localhost:3305')
+    axios.post('http://localhost:3305')
       .then(res=>{
         if(res.data.valid){
           console.log('Home');

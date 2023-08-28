@@ -25,7 +25,7 @@ function ResponsiveAppBar() {
   const [role,setRole] = React.useState('');
   const {cart} = useCart();
   React.useEffect(()=>{
-    axios.get('http://localhost:3305')
+    axios.post('http://localhost:3305')
       .then(res=>{
         if(res.data.valid){
           setUser(res.data.user);
@@ -50,7 +50,7 @@ function ResponsiveAppBar() {
   
   axios.defaults.withCredentials = true;
   const handleLogout =()=>{
-    axios.get('http://localhost:3305/logout')
+    axios.post('http://localhost:3305/logout')
     .then(res=>{
       window.location.reload();
     })

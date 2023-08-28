@@ -8,7 +8,7 @@ const CartPage = () => {
   const [id,setId] = React.useState('')
   const [user,setUser] = React.useState('');
   React.useEffect(()=>{
-    axios.get('http://localhost:3305')
+    axios.post('http://localhost:3305')
       .then(res=>{
         if(res.data.valid){
           setUser(res.data.user);

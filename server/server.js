@@ -87,16 +87,16 @@ app.post('/shipping',(req,res)=>{
     });
 })
 
-app.get('/orders/:id',(req,res)=>{
+app.post('/uorders/:id',(req,res)=>{
     const q = 'SELECT * FROM orders WHERE `uid`=?';
-    id = req.params.uid;
+    id = req.session.uid;
     db.query(q,[id],(err,data)=>{
         if(err) return res.json('an error occurred');
         return res.json(data);
     })
 })
 
-app.get('/orders',(req,res)=>{
+app.post('/orders',(req,res)=>{
     const q = 'SELECT * FROM orders';
     db.query(q,(err,data)=>{
         if(err) return res.json('an error occurred');
@@ -151,18 +151,18 @@ app.post('/addproduct',(req,res)=>{
 })
 
 
-app.get('/',(req,res)=>{
+app.post('/',(req,res)=>{
     if(req.session.username){
         return res.json({valid:true,user:req.session.username,role:req.session.role,id:req.session.uid})
     }
     else return res.json({valid:false});
 })
-app.get('/logout',(req,res)=>{
+app.post('/logout',(req,res)=>{
     req.session.destroy();
     return res.json("LOGGED OUT");
 })
 
-app.get('/users',(req,res)=>{
+app.post('/users',(req,res)=>{
     const q = 'SELECT * FROM users';
     db.query(q,(err,data)=>{
         if(err) return res.json('an error occurred');
@@ -215,10 +215,6 @@ app.post('/login',(req,res)=>{
     });
 }) 
 
-app.get('/logout',(req,res)=>{
-    req.session.destroy();
-    return res.json("LOGGED OUT");
-})
 
 
 app.listen(port,()=>{
