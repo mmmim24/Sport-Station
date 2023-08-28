@@ -15,7 +15,7 @@ const app = express();
 // app.use('/ppp',Product);
 // app.use('/pp',User);
 app.use(cors({
-    origin:["http://localhost:3000","http://10.100.174.86:3000","http://127.0.0.1:3000","http://localhost:3306/","http://10.100.167.178:3000"],
+    origin:["http://localhost:3000"],
     methods:["POST","GET","PATCH","DELETE"],
     credentials:true
 }));

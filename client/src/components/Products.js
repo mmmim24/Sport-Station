@@ -56,7 +56,7 @@ export const Products = () => {
         <div className='container'>
           <div className='row row-cols-3'>
             {products.map((p)=>{
-              k=k+1
+              // k=k+1
               return (
                 <div key={k} className='col'>
                   <Card sx={{ width: 345,height: 450 }}>

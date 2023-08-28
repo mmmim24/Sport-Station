@@ -57,14 +57,7 @@ const CheckOut = () => {
   // console.log(user.uid);
   // const sx = dat.uid;
     // console.log(sx);
-    console.log(arr);
-    var txt;
-    const opIn = (e) =>{
-      e.preventDefault();
-      txt = e.target.value;
-      // setValue(value2.method)
-    }
-    // console.log(arr.uid);
+    // console.log(arr);// console.log(arr.uid);
     function getFullDateAndTimeUTC() {
             const currentDate = new Date();
             const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', timeZone: 'UTC' };
@@ -87,9 +80,18 @@ const CheckOut = () => {
       time: fullDateAndTimeUTC,
       details: 'bulk',
       status:'placed',
-      method: ''
+      method: 'Cash on Delivery'
     };
-    console.log(txt);
+    var txt,val,x;
+    const opIn = (e) =>{
+      e.preventDefault();
+      x = document.getElementById('method');
+      val = x.value;
+      txt = x.options[x.selectedIndex].text;
+      value2.method = txt;
+      console.log(value2.method);
+    }
+    console.log(val,txt);
     axios.defaults.withCredentials = true;
     const handleInput = (e) =>{
       setValue(prev=>({
@@ -113,9 +115,9 @@ const CheckOut = () => {
       .catch(err=>console.log(err));
     }
     if(value2.oid&&value2.uid&&value2.time){
-      // value2.method=txt;
+      txt =  value2.method;
       var url;
-      if(txt==='cod'){
+      if(txt==='Cash on Delivery'){
         url='/log';
       } 
       else{
@@ -189,8 +191,8 @@ const CheckOut = () => {
                     <div>
                       <label className='m-2 fw-bolder' htmlFor='method'>Choose your payment method</label>
                       <select name="method" id="method" onChange={opIn}>
-                        <option value="cod">COD</option>
-                        <option value="adv">Pay Online</option>
+                        <option value="cod">Cash on Delivery</option>
+                        <option value="adv">Online payment</option>
                       </select>  
                     </div>
                     <div>
